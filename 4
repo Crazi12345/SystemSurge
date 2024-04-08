@@ -14,8 +14,7 @@ class CLI(cmd.Cmd):
     def do_version(self, line):
         """version checker"""
         command = "ssh -t "+self.target_user + "@"+self.target_ip+" " + line
-        result = subprocess.getoutput(command)
-        print(result)
+        meme = os.popen(command).read()
 
     def do_dos(self, line):
         """Attacks the dashboard server"""
