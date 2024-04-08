@@ -8,10 +8,15 @@ class CLI(cmd.Cmd):
 
     prompt = '>> '
     intro = "Welcome to SystemSurge"
+    target_ip = "0.0.0.0"
 
-    def do_hello(self, line):
-        """Print a greeting."""
-        print("Hello, World!")
+    def do_config_target_ip(self, line):
+        """sets the ip for target"""
+        self.target_ip = line.strip()
+    def do_vul_analysis(self, line):
+
+        """runs a simple vulnerability analysis"""
+        os.system("nmap "+self.target_ip +" -p-")
 
     def do_quit(self, line):
         """Exit the CLI."""
