@@ -25,7 +25,10 @@ class CLI(cmd.Cmd):
             result = result.replace(self.target_ip, "")
             x = re.search(data[key]["regex"], result)
             try:
-                print(key+" "+x.group())
+                if x.group() != data[key]["safe_version"]:
+                    print('\x1b[2;30;41m' + key+ " "+x.group() +" "+ '\x1b[0m')
+                else:
+                    print( key+" "+x.group())
             except Exception as e:
                 print(key+ " COULD NOT BE FOUND")
     def do_dos(self, line):

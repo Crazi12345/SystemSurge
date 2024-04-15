@@ -49,26 +49,26 @@
 	},
 	"vim": {
 		"version_cmd": "vim --version",
-		"safe_version": "8.1.1365",
-		"regex": "\\b(\\d+\\.\\d+.\\d+)\\b",
+		"safe_version": "8.2",
+		"regex": "\\b(\\d+\\.\\d+)\\b",
 		"actual_version": 0
 	},
 	"OpenSSH": {
 		"version_cmd": "ssh -V",
 		"safe_version": "7.4",
-		"regex": "\\b(\\d+\\.\\d+)\\d+\\b",
+		"regex": "(\\d+\\.\\d+)",
 		"actual_version": 0
 	},
 	"bzip": {
 		"version_cmd": "bzip2 --version",
-		"safe_version": "1.0.6",
+		"safe_version": "1.0.7",
 		"regex": "\\b(\\d+\\.\\d+.\\d+)\\b",
 		"actual_version": 0
 	},
 	"OpenSSL": {
 		"version_cmd": "openssl version",
 		"safe_version": "1.1.1",
-		"regex": "\\b(\\d+\\.\\d+.\\d+)\\b",
+		"regex": "\\b(\\d+\\.\\d+.\\d+)",
 		"actual_version": 0
 	},
 	"libXcursor": {
