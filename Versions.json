@@ -1,0 +1,98 @@
+{
+	"Python": {
+		"version_cmd": "python -V",
+		"safe_version": "3.7.3",
+		"regex": "\\b(\\d+\\.\\d+.\\d+)\\b",
+		"actual_version": 0
+	},
+	"glibc": {
+		"version_cmd": "ldd --version",
+		"safe_version": "2.27",
+		"regex": "\\b(\\d+\\.\\d+)\\d+\\b",
+		"actual_version": 0
+	},
+	"bash": {
+		"version_cmd": "bash --version",
+		"safe_version": "5.0",
+		"regex": "\\b(\\d+\\.\\d+)\\d+\\b",
+		"actual_version": 0
+	},
+	"util-linux": {
+		"version_cmd": "uname -a",
+		"safe_version": "2.32.1",
+		"regex": "\\b(\\d+\\.\\d+.\\d+)\\b",
+		"actual_version": 0
+	},
+	"BusyBox": {
+		"version_cmd": "busybox | head -1",
+		"safe_version": "1.23.0",
+		"regex": "\\b(\\d+\\.\\d+.\\d+)\\b",
+		"actual_version": 0
+	},
+	"Sqlite3": {
+		"version_cmd": "sqlite3 --version",
+		"safe_version": "3.27.0",
+		"regex": "\\b(\\d+\\.\\d+.\\d+)\\b",
+		"actual_version": 0
+	},
+	"wget": {
+		"version_cmd": "wget --version",
+		"safe_version": "1.18",
+		"regex": "\\b(\\d+\\.\\d+)\\d+\\b",
+		"actual_version": 0
+	},
+	"libgcrypt": {
+		"version_cmd": "libgcrypt-config --version",
+		"safe_version": "1.7.8",
+		"regex": "\\b(\\d+\\.\\d+.\\d+)\\b",
+		"actual_version": 0
+	},
+	"vim": {
+		"version_cmd": "vim --version",
+		"safe_version": "8.1.1365",
+		"regex": "\\b(\\d+\\.\\d+.\\d+)\\b",
+		"actual_version": 0
+	},
+	"OpenSSH": {
+		"version_cmd": "ssh -V",
+		"safe_version": "7.4",
+		"regex": "\\b(\\d+\\.\\d+)\\d+\\b",
+		"actual_version": 0
+	},
+	"bzip": {
+		"version_cmd": "bzip2 --version",
+		"safe_version": "1.0.6",
+		"regex": "\\b(\\d+\\.\\d+.\\d+)\\b",
+		"actual_version": 0
+	},
+	"elfutils": {
+		"version_cmd": "ls",
+		"safe_version": "0.174",
+		"regex": "\\b(\\d+\\.\\d+)\\d+\\b",
+		"actual_version": 0
+	},
+	"OpenSSL": {
+		"version_cmd": "openssl version",
+		"safe_version": "1.1.1",
+		"regex": "\\b(\\d+\\.\\d+.\\d+)\\b",
+		"actual_version": 0
+	},
+	"libXcursor": {
+		"version_cmd": "apt-cache policy libXcursor1",
+		"safe_version": "1.1.15",
+		"regex": "\\b(\\d+\\.\\d+.\\d+)\\b",
+		"actual_version": 0
+	},
+	"libcurl": {
+		"version_cmd": "curl --version",
+		"safe_version": "7.57.0",
+		"regex": "\\b(\\d+\\.\\d+.\\d+)\\b",
+		"actual_version": 0
+	},
+	"X.Org Server": {
+		"version_cmd": "sudo X -version",
+		"safe_version": "1.19.4",
+		"regex": "\\b(\\d+\\.\\d+.\\d+)\\b",
+		"actual_version": 0
+	}
+}
