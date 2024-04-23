@@ -84,7 +84,7 @@
 		"actual_version": 0
 	},
 	"X.Org Server": {
-		"version_cmd": "sudo X -version",
+		"version_cmd": "X -version",
 		"safe_version": "1.19.4",
 		"regex": "\\b(\\d+\\.\\d+.\\d+)\\b",
 		"actual_version": 0
