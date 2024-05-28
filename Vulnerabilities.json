@@ -1,0 +1,34 @@
+{
+    "DashboardServerAttack": {
+        "TestCommand": "echo robotmode | nc IP",
+        "VulnerablePort": [
+            29999,
+            29919
+        ],
+        "Attack Scenario": "The attacker exploits the absence of authentication measures in the dashboard server to gain unauthorized access. Upon login,they execute commands designed to overwhelm the robot’s resources ortrigger software faults, leading to a state of unresponsiveness or erraticbehavior. This could involve flooding the robot with excessive command requests or exploiting software vulnerabilities to crash critical processes",
+        "STRIDE" : ["Elevation of privilege", "Denial of Service"],
+        "CVSS": 7.4,
+        "Recommendation": "Turn this feature off in the settings if not used"
+    },
+    "DashboardServerRemoteAttack": {
+        "TestCommand": "echo is in remote control| nc IP",
+        "VulnerablePort": [
+            29999,
+            29919
+        ],
+        "Attack Scenario": "The attacker gains access to the unauthenticated dashboard server and replays previously executed commands, causing therobot to replicate its past movements or actions remotely.",
+        "STRIDE" : ["Elevation of privilege", "Denial of Service"],
+        "CVSS": 8.8,
+        "Recommendation": "Turn this feature off in the settings if not used"
+    },
+    "ModBusAttack": {
+        "TestCommand": "",
+        "VulnerablePort": [
+            502
+        ],
+        "Attack Scenario": "Modbus ",
+        "STRIDE" : ["Tampering", "Denial of Service"],
+        "CVSS": 8.8,
+        "Recommendation": "unknown"
+    }
+}

@@ -27,7 +27,18 @@ class CLI(cmd.Cmd):
     target_user = "root"
     target_pass = "easybot"
     target_pass_default = "easybot"
-    score = 10.0
+    score = 0.0
+
+    def printVul(self, doc, name):
+        print(name)
+        print("")
+        print(doc["VulnerablePort"])
+        print("")
+        print(doc["STRIDE"])
+        print("")
+        print("CVSS: "+str(doc["CVSS"]))
+        print("")
+        print(doc["Recommendation"])
 
     def update_score(self, delta):
         self.score = self.score + delta
@@ -38,6 +49,17 @@ class CLI(cmd.Cmd):
             os.system(f"echo brake release | nc {self.target_ip} 29999")
             time.sleep(30)
             os.system(f"echo play | nc {self.target_ip} 29999")
+
+    def scanner_nmap(self, ip, port):
+        command = ["nmap", self.target_user, "@", ip, "-p", port]
+
+        process = subprocess.Popen(
+            command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        stdout, stderr = process.communicate()
+        result = re.search("open", stdout.decode("utf-8"))
+        if len(result.group()) > 1:
+            return True
+        return False
 
     def do_version(self, line):
         """version checker"""
@@ -55,15 +77,11 @@ class CLI(cmd.Cmd):
                         x.group(), data[key]["safe_version"]):
                     print(key+" "+x.group())
                 else:
-                    self.update_score(-0.5)
+                    self.update_score(0.5)
                     print('\x1b[2;30;41m' + key + " " +
                           x.group() + " " + '\x1b[0m')
             except Exception:
                 print(key + " COULD NOT BE FOUND")
-
-    def do_dos(self, line):
-        """Attacks the dashboard server"""
-        os.system("printf \"get robot model\"|nc "+self.target_ip+" 29999")
 
     def do_ip(self, line):
         """sets the ip for target"""
@@ -89,10 +107,16 @@ class CLI(cmd.Cmd):
 
     def do_vul_analysis(self, line):
         """runs a simple vulnerability analysis"""
-        self.score = 10
+        self.score = 0
         self.do_version
-        self.replay(2)
-        os.system("nmap "+self.target_ip + "")
+        with open('./Vulnerabilities.json') as f:
+            data = json.load(f)
+
+        for key, value in data.items():
+            for val in data[key]["VulnerablePort"]:
+                print(val)
+                if self.scanner_nmap(self.target_ip, str(val)):
+                    self.printVul(data[key], key)
 
     def do_quit(self, line):
         """Exit the CLI."""
