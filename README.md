@@ -1,2 +1,2 @@
 # SystemSurge
-A Surper Durper Non-Violent CLI TOOL For ur testing 
+A Testing Tool developed to identify Cybersecurity Risks in UR e-Series Robotic arms.
